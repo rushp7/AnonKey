@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "AnonKey",
+  "version": "0.1",
+  "action": { "default_popup": "popup.html" },
+  "description": "AnonKey",
+  "icons": {
+    "16": "images/dart.png",
+    "32": "images/group.png",
+    "48": "images/home.png",
+    "128": "images/settings.png"
+  },
+  "author": "Rushil Punchhi",
+  "content_scripts": [
+    {
+      "js": ["scripts/jquery-3.6.1.min.js", "scripts/popup.js"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "permissions": [
+    "contextMenus"
+  ]
+}
