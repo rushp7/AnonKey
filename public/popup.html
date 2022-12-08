@@ -6,32 +6,18 @@
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <!--
-      taken from https://dribbble.com/shots/9532615-Power-switch-animation-CodePen.-->
-    <div class="power-switch">
-      <input type="checkbox" id="toggleProfileMode"/>
-      <div class="button">
-        <svg class="power-off">
-          <use xlink:href="#line" class="line" />
-          <use xlink:href="#circle" class="circle" />
-        </svg>
-        <svg class="power-on">
-          <use xlink:href="#line" class="line" />
-          <use xlink:href="#circle" class="circle" />
-        </svg>
+    <div class="app">
+      <p class="title">AnonKeystroke</p>
+      <div>
+        <a class="effect1" href="#">
+          Regenerate
+          <span class="bg"></span>
+        </a>
       </div>
+
+      <hr class="divider" />
+      <p class="subtitle">Press the <code>Regenerate</code> button to create a new profile for this website</p>
     </div>
-    
-    <!-- SVG -->
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-      <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" id="line">
-        <line x1="75" y1="34" x2="75" y2="58"/>
-      </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" id="circle">
-        <circle cx="75" cy="80" r="35"/>
-      </symbol>
-    </svg>
-    
 
     <script src="popup.js"></script>
 
