@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Chrome Extension</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <!--
+      taken from https://dribbble.com/shots/9532615-Power-switch-animation-CodePen.-->
+    <div class="power-switch">
+      <input type="checkbox" id="toggleProfileMode"/>
+      <div class="button">
+        <svg class="power-off">
+          <use xlink:href="#line" class="line" />
+          <use xlink:href="#circle" class="circle" />
+        </svg>
+        <svg class="power-on">
+          <use xlink:href="#line" class="line" />
+          <use xlink:href="#circle" class="circle" />
+        </svg>
+      </div>
+    </div>
+    
+    <!-- SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" id="line">
+        <line x1="75" y1="34" x2="75" y2="58"/>
+      </symbol>
+      <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" id="circle">
+        <circle cx="75" cy="80" r="35"/>
+      </symbol>
+    </svg>
+    
+
+    <script src="popup.js"></script>
+
+    <!--
+      This HTML file opens when you click on icon from the toolbar.
+
+      To begin the development, run `npm run watch`.
+      To create a production bundle, use `npm run build`.
+    -->
+  </body>
+</html>
