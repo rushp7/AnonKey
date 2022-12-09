@@ -46,12 +46,6 @@ function alterKeystrokes(prediction) {
     else if (keycode >= 65 && keycode <= 90) sleep(prediction[keycode - 65]);
     else sleep(prediction[26]);
   }
-  $(':input:text').keydown(function (e) {
-    detsleep(e.keyCode);
-  });
-  $(':input:text').keyup(function (e) {
-    detsleep(e.keyCode);
-  });
   $('input[type=text], textarea').keyup(function (e) {
     detsleep(e.keyCode);
   });
