@@ -2,10 +2,15 @@
 
 My Chrome Extension
 
-## Features
+## How to run (Development)
 
-- Feature 1
-- Feature 2
+- npm install http-server -g
+- cd webgan
+- http-server -c1 --cors .
+- Open chrome://extensions
+- Enable developer mode
+- Click on "Load unpacked"
+- Select the "build folder" inside the project folder
 
 ## Install
 
