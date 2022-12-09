@@ -6,25 +6,31 @@
 // See https://developer.chrome.com/extensions/background_pages
 
 import * as tf from '@tensorflow/tfjs';
-console.log('This is background service worker - edit me!');
+console.log('This is background service worker');
 
-function computePrediction(model, host) {
-  chrome.storage.sync.get(host).then((result) => {
-    if (result !== undefined) {
-      console.log('Website already exists. Returning prediction');
-      console.log(result[host]);
-      return result[host];
+function computePrediction(model, host, tabId) {
+  chrome.storage.sync.get([host], function (result) {
+    function sendPrediction(prediction) {
+      chrome.tabs.sendMessage(tabId, {
+        type: 'SEND_PREDICTION',
+        payload: prediction,
+      });
     }
 
-    console.log('New website. Generating new prediction');
-    let prediciion = model
-      .predict(tf.randomUniform([1, 1, 27], 0, 1))
-      .dataSync();
-    const payload = Array.from(prediciion);
-    chrome.storage.sync.set({ [host]: payload }).then(() => {
-      console.log('Prediction is set to ' + payload);
-      return payload;
-    });
+    if (result[host] != undefined) {
+      console.log('Website already exists. Returning prediction');
+      sendPrediction(result[host]);
+    } else {
+      console.log('New website. Generating new prediction');
+      let prediciion = model
+        .predict(tf.randomUniform([1, 1, 27], 0, 1))
+        .dataSync();
+      const payload = Array.from(prediciion);
+      chrome.storage.sync.set({ [host]: payload }).then(() => {
+        console.log('Prediction is set to ' + payload);
+        sendPrediction(payload);
+      });
+    }
   });
 }
 
@@ -35,13 +41,16 @@ async function tensorflow() {
 
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === 'REQUEST_PREDICTION') {
+      //tab id
+      const tabId = sender.tab.id;
       const message = 'Hi bit, computing prediction';
       // Log message coming from the `request` parameter
       console.log(request.payload.message);
-      console.log('host in tf:' + request.payload.host);
+      console.log('host in tf: ' + request.payload.host);
+      computePrediction(model, request.payload.host, tabId);
       // Send a response message
       sendResponse({
-        message,
+        message: message
       });
     }
   });
@@ -58,3 +67,23 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     payload: { host: hostname },
   });
 });
+
+// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+
+//   function generateNewPrediction() {
+//     //get tab id
+//     const tabId = sender.tab.id;
+//     //get hostname
+//     let hostname = new URL(sender.tab.url).hostname;
+//     chrome.tabs.sendMessage(tabId, {
+//       type: 'REQUEST_PREDICTION',
+//       payload: { host: hostname },
+//     });
+//   }
+//   if (request.type === 'regeneratePrediction') {
+//     //get tab id
+//     const tabId = sender.tab.id;
+//     //get hostname
+//     let hostname = new URL(sender.tab.url).hostname;
+//   }
+// });

@@ -35,7 +35,27 @@ function sleep(ms) {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'enablePrivacy') runPrivacy(request.payload.host);
+  if (request.type === 'SEND_PREDICTION') alterKeystrokes(request.payload);
 });
+
+function alterKeystrokes(prediction) {
+  console.log('altering keystrokes');
+  console.log(prediction);
+  function detsleep(keycode) {
+    if (keycode == 32) sleep(prediction[26]);
+    else if (keycode >= 65 && keycode <= 90) sleep(prediction[keycode - 65]);
+    else sleep(prediction[26]);
+  }
+  $(':input:text').keydown(function (e) {
+    detsleep(e.keyCode);
+  });
+  $(':input:text').keyup(function (e) {
+    detsleep(e.keyCode);
+  });
+  $('input[type=text], textarea').keyup(function (e) {
+    detsleep(e.keyCode);
+  });
+}
 
 function runPrivacy(host) {
   chrome.runtime.sendMessage(
@@ -48,26 +68,6 @@ function runPrivacy(host) {
     },
     (response) => {
       console.log(response.message);
-      console.log(response.payload);
-
-      function detsleep(keycode) {
-        if (keycode == 32) sleep(response.payload[26]);
-        else if (keycode >= 65 && keycode <= 90)
-          sleep(response.payload[keycode - 65]);
-        else sleep(response.payload[26]);
-      }
-      $(':input:text').keydown(function (e) {
-        console.log(e.keyCode);
-        detsleep(e.keyCode);
-      });
-      $(':input:text').keyup(function (e) {
-        console.log('2');
-        detsleep(e.keyCode);
-      });
-      $('input[type=text], textarea').keyup(function (e) {
-        console.log('3');
-        detsleep(e.keyCode);
-      });
     }
   );
 }
