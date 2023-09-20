@@ -5,8 +5,6 @@ var $ = require('jquery');
 
 (function () {
   $('.effect1').on('click', function (e) {
-    // e.preventDefault();
-    // togglePrivacy();
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       //get tab hostname
       var url = new URL(tabs[0].url);

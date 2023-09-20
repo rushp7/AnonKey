@@ -67,23 +67,3 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     payload: { host: hostname },
   });
 });
-
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-
-//   function generateNewPrediction() {
-//     //get tab id
-//     const tabId = sender.tab.id;
-//     //get hostname
-//     let hostname = new URL(sender.tab.url).hostname;
-//     chrome.tabs.sendMessage(tabId, {
-//       type: 'REQUEST_PREDICTION',
-//       payload: { host: hostname },
-//     });
-//   }
-//   if (request.type === 'regeneratePrediction') {
-//     //get tab id
-//     const tabId = sender.tab.id;
-//     //get hostname
-//     let hostname = new URL(sender.tab.url).hostname;
-//   }
-// });
